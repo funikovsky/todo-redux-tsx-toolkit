@@ -1,24 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+
 import './App.css';
+import { TodoForm } from './components/todoForm';
+import { TodoList } from './components/todoList';
+import { UserFirstName } from './components/userFirstName';
+import { UserForm } from './components/userForm';
+import { UserLastName } from './components/userLastName';
+import { useAppSelector } from './hook'
 
 function App() {
+  const todos = useAppSelector(state => state.todo.todos)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <UserForm/>
+      <UserFirstName/>
+      <UserLastName/>
+      <TodoForm/>
+      <TodoList todos={todos}/>
     </div>
   );
 }
