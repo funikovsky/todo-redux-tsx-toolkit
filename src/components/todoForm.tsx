@@ -3,6 +3,8 @@ import { useAppDispatch } from '../hook';
 import { v4 } from 'uuid';
 import { addTodo } from '../store/todoSlice';
 
+type TodoHandlerType = () => void
+
 export const TodoForm: FC = () => {
 
     const [value, setValue] = useState('')
@@ -10,7 +12,7 @@ export const TodoForm: FC = () => {
     const dispatch = useAppDispatch()
 
 
-    const addTodoHandler = () => {
+    const addTodoHandler: TodoHandlerType = () => {
 
         const todoItem = {
             title: value,
@@ -24,10 +26,19 @@ export const TodoForm: FC = () => {
 
     }
 
+    const handelKeyDown:React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+        if(e.key === 'enter') {
+
+            addTodoHandler()
+
+        }
+        
+    }
+
     return (
         <div style={{ margin: 30 }}>
             <form onSubmit={(e) => e.preventDefault()}>
-                <input value={value} onChange={(e) => setValue(e.target.value)} type="text" />
+                <input value={value} onKeyDown={(e) => handelKeyDown(e)} onChange={(e) => setValue(e.target.value)} type="text" />
                 <button onClick={() => addTodoHandler()}>Add Todo</button>
             </form>
         </div>

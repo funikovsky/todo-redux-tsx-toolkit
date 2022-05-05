@@ -22,6 +22,7 @@ export const TodoItem: FC<TodoItemProps> = ({ todo }) => {
         <div style={{ marginBottom: 20 }}>
 
             <button onClick={() => dispath(completedTodo(todo.id))}>Выполнено</button>
+            <input type="checkbox" checked={todo.completed} onChange={() => dispath(completedTodo(todo.id))}/>
             <span className={todo.completed ? "completed" : ""} style={{ minWidth: 200, display: 'inline-block' }}>{todo.title}</span>
             <button onClick={() => dispath(removeTodo(todo.id))}>Удалить</button>
 
