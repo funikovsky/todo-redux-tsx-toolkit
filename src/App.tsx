@@ -11,11 +11,18 @@ function App() {
   const todos = useAppSelector(state => state.todo.todos)
   return (
     <div className="App">
-      <UserForm/>
-      <UserFirstName/>
-      <UserLastName/>
-      <TodoForm/>
-      <TodoList todos={todos}/>
+      <div>
+        <UserForm />
+        <UserFirstName />
+        <UserLastName />
+      </div>
+      <div>
+        <TodoForm />
+        <TodoList todos={todos} />
+      </div>
+      
+
+
     </div>
   );
 }

@@ -9,7 +9,7 @@ export const UserForm: FC = () => {
     return (
 
         <>
-            <div style={{ margin: 30 }}>
+            <div style={{ marginBottom: 30 }}>
                 <input onChange={(e) => dispatch(addFirstName(e.target.value))} type="text" /> FirstName
             </div>
             <div>
