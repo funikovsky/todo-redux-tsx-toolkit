@@ -36,7 +36,7 @@ export const TodoForm: FC = () => {
     }
 
     return (
-        <div style={{ marginBottom: 30, textAlign: 'center' }}>
+        <div style={{ marginBottom: 30, marginTop:30, textAlign: 'center' }}>
             <form onSubmit={(e) => e.preventDefault()}>
                 <input value={value} onKeyDown={(e) => handelKeyDown(e)} onChange={(e) => setValue(e.target.value)} type="text" />
                 <button onClick={() => addTodoHandler()}>Add Todo</button>

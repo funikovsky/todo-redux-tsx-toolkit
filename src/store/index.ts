@@ -1,11 +1,13 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
 import { userSlice } from './userSlice';
 import { todoSlice } from './todoSlice';
+import { PostSlice } from './postSlice';
 
 
 const rootReducer = combineReducers({
     user: userSlice.reducer,
-    todo: todoSlice.reducer
+    todo: todoSlice.reducer,
+    post: PostSlice.reducer
 })
 
 const store = configureStore({

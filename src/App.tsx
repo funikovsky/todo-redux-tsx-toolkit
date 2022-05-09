@@ -1,5 +1,6 @@
 
 import './App.css';
+import { Posts } from './components/posts';
 import { TodoForm } from './components/todoForm';
 import { TodoList } from './components/todoList';
 import { UserFirstName } from './components/userFirstName';
@@ -9,18 +10,26 @@ import { useAppSelector } from './hook'
 
 function App() {
   const todos = useAppSelector(state => state.todo.todos)
+  
   return (
     <div className="App">
-      <div>
+      <div style={{width:500, textAlign: 'center'}}>
+        Change STORE
         <UserForm />
         <UserFirstName />
         <UserLastName />
       </div>
-      <div>
+      <div style={{width:500, textAlign: 'center'}}>
+        TODO
         <TodoForm />
         <TodoList todos={todos} />
       </div>
-      
+      <div style={{width:500, textAlign: 'center'}}>
+        POSTS
+        <Posts/>
+        
+      </div>
+
 
 
     </div>
