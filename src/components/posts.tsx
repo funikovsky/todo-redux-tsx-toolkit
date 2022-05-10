@@ -10,14 +10,17 @@ export const  Posts:FC = () => {
 
     const dispatch = useAppDispatch()
     const posts = useAppSelector(state => state.post.posts)
-    const louding = useAppSelector(state => state.post.louding)
+    const loading = useAppSelector(state => state.post.loading)
+    const error = useAppSelector(state => state.post.error)
     
 
 return (
 
     <>
         <button onClick={() => dispatch(getPosts())}> GET POSTS</button>
-        {louding && <p>...ЗАГРУЗКА</p>}
+        {loading && <p>...ЗАГРУЗКА</p>}
+        {error && <p>{error.toString()}</p>}
+        {}
         {posts.map(post => (
             <Post key={post.id} post={post}/>
           

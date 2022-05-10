@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
+import { ErrorInfo } from "react";
 
 interface Post {
     id:number,
@@ -11,12 +12,15 @@ interface Post {
 
 interface InitialState {
     posts: Post[],
-    louding: boolean
+    loading: boolean,
+    error: ErrorInfo | null 
 }
 
 const initialState: InitialState = {
     posts: [],
-    louding: false
+    loading: false,
+    error: null
+    
 } 
 
 export const PostSlice = createSlice({
@@ -37,39 +41,55 @@ export const PostSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addMatcher(isAnyOf(getPosts.pending), (state, action) => {
-                state.louding = true
+                state.loading = true
+                state.error = null
             })
             .addMatcher(isAnyOf(getPosts.fulfilled), (state, action) => {
 
                 console.log('fulfilled')
-                state.louding = false
+                state.loading = false
+                state.error = null
                 state.posts = action.payload.posts.map(post => {
                     return {...post, isPrivat: false}
                 })
                
             })
             .addMatcher(isAnyOf(getPosts.rejected), (state, action) => {
-                console.log('rejected')
-                state.louding = false
+                console.log(action.payload)
+                state.loading = false
+                if(action.payload) state.error = action.payload
             })
     }
 
 })
 
-export const getPosts = createAsyncThunk<InitialState, void, {rejectValue: InitialState}>(
+export const getPosts = createAsyncThunk<InitialState, void, {rejectValue: ErrorInfo }>(
   'get/posts',
     async(_, {rejectWithValue}) => {
 
-        const request = await fetch('https://jsonplaceholder.typicode.com/posts/')
-        const data:Post[] = await request.json()
+        try {
+
+            const request = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
+
+            if(!request.ok) {
+                throw new Error('Server Error')
+            }
+            const data:Post[] = await request.json()
         
-        const newState = {
-            posts: [...data],
-            louding: false
+            const newState = {
+                posts: [...data],
+                loading: false,
+                error: null
+            }
+                
+            return newState
+            
+        } catch (error:any) {
+            return rejectWithValue(error.message)
+            
         }
+
         
-        
-        return newState
               
     }
 )
