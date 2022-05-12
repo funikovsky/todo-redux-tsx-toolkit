@@ -1,32 +1,28 @@
 
-import {FC} from 'react'
+import { FC } from 'react'
 import { useDispatch } from 'react-redux'
-import { openPostInfo} from '../store/postSlice'
+import { openPostInfo } from '../store/postSlice'
 import { PostInfo } from './postInfo'
 
 interface IPost {
     post: {
-        id:number,
+        id: number,
         title: string,
         body: string,
         userId: number,
-        isPrivat: boolean
     }
 }
 
-
-export const Post:FC<IPost> = ({post}) => {
+export const Post: FC<IPost> = ({ post }) => {
 
     const dispatch = useDispatch()
     return (
         <div onClick={() => dispatch(openPostInfo(post.id))} >
-            
             <p>
                 {post.title}
             </p>
 
-            {post.isPrivat && <PostInfo post={post}/> }
-
+            <PostInfo post={post} />
 
         </div>
     )

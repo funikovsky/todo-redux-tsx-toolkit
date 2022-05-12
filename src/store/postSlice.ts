@@ -1,40 +1,43 @@
 import { createAsyncThunk, createSlice, isAnyOf, PayloadAction } from "@reduxjs/toolkit";
-import { ErrorInfo } from "react";
 
 interface Post {
-    id:number,
+    id: number,
     title: string,
     body: string,
     userId: number,
-    isPrivat: boolean
-    
+
 }
 
 interface InitialState {
     posts: Post[],
     loading: boolean,
-    error: ErrorInfo | null 
+    error: string | null | undefined,
+    openPostId: number | null
+
 }
 
 const initialState: InitialState = {
     posts: [],
     loading: false,
-    error: null
-    
-} 
+    error: null,
+    openPostId: null
+
+
+}
 
 export const PostSlice = createSlice({
     name: 'post',
     initialState,
-    reducers:{
+    reducers: {
         openPostInfo: (state, action: PayloadAction<number>) => {
 
-            state.posts.map(post => {
-                if(post.id === action.payload) {
-                    post.isPrivat = !post.isPrivat
-                }
-                return post
-            })
+            if (state.openPostId !== action.payload) {
+                state.openPostId = null
+                state.openPostId = action.payload
+            } else {
+                state.openPostId = null
+
+            }
 
         }
     },
@@ -49,51 +52,43 @@ export const PostSlice = createSlice({
                 console.log('fulfilled')
                 state.loading = false
                 state.error = null
-                state.posts = action.payload.posts.map(post => {
-                    return {...post, isPrivat: false}
-                })
-               
+                state.posts = action.payload.posts
+
             })
             .addMatcher(isAnyOf(getPosts.rejected), (state, action) => {
-                console.log(action.payload)
+
                 state.loading = false
-                if(action.payload) state.error = action.payload
+                state.error = action.payload
             })
     }
 
 })
 
-export const getPosts = createAsyncThunk<InitialState, void, {rejectValue: ErrorInfo }>(
-  'get/posts',
-    async(_, {rejectWithValue}) => {
+export const getPosts = createAsyncThunk<InitialState, void, { rejectValue: string }>(
+    'get/posts',
+    async (_, { rejectWithValue }) => {
 
         try {
 
             const request = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
 
-            if(!request.ok) {
-                throw new Error('Server Error')
-            }
-            const data:Post[] = await request.json()
-        
-            const newState = {
-                posts: [...data],
-                loading: false,
-                error: null
-            }
-                
-            return newState
-            
-        } catch (error:any) {
-            return rejectWithValue(error.message)
-            
-        }
+            const data: Array<Post> = await request.json()
 
-        
-              
+            const newState = {
+                posts: data,
+                loading: false,
+                error: null,
+                openPostId: null
+            }
+
+            return newState
+
+        } catch (e: any) {
+            return rejectWithValue('Ошибка загрузки данных')
+        }
     }
 )
 
 
 export const PostReducer = PostSlice.reducer
-export const {openPostInfo} = PostSlice.actions
+export const { openPostInfo } = PostSlice.actions

@@ -1,31 +1,27 @@
 import { FC } from "react"
 import { Post } from "./post"
-import { useAppDispatch } from "../hook"
-import { getPosts } from "../store/postSlice"
-import {useAppSelector} from '../hook'
+import { useAppSelector } from '../hook'
+import { LoadingPosts } from "./loadingPosts"
+import { ErrorPosts } from "./error"
+import { GetPostsForm } from "./getPostForm"
 
 
 
-export const  Posts:FC = () => {
+export const Posts: FC = () => {
 
-    const dispatch = useAppDispatch()
     const posts = useAppSelector(state => state.post.posts)
-    const loading = useAppSelector(state => state.post.loading)
-    const error = useAppSelector(state => state.post.error)
-    
+    return (
 
-return (
+        <>
+            <GetPostsForm />
+            <LoadingPosts />
+            <ErrorPosts />
 
-    <>
-        <button onClick={() => dispatch(getPosts())}> GET POSTS</button>
-        {loading && <p>...ЗАГРУЗКА</p>}
-        {error && <p>{error.toString()}</p>}
-        {}
-        {posts.map(post => (
-            <Post key={post.id} post={post}/>
-          
-        ))}
-    </>
-)
+            {posts.map(post => (
+                <Post key={post.id} post={post} />
+
+            ))}
+        </>
+    )
 
 }

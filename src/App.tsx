@@ -10,24 +10,28 @@ import { useAppSelector } from './hook'
 
 function App() {
   const todos = useAppSelector(state => state.todo.todos)
-  
+
   return (
     <div className="App">
-      <div style={{width:500, textAlign: 'center'}}>
+      <div style={{ width: 500, textAlign: 'center' }}>
         Change STORE
         <UserForm />
         <UserFirstName />
         <UserLastName />
       </div>
-      <div style={{width:500, textAlign: 'center'}}>
+      <div style={{ width: 500, textAlign: 'center' }}>
         TODO
         <TodoForm />
         <TodoList todos={todos} />
       </div>
-      <div style={{width:500, textAlign: 'center'}}>
+      <div style={{ width: 500, textAlign: 'center' }}>
         POSTS
-        <Posts/>
-        
+
+        <div >
+          <Posts />
+        </div>
+
+
       </div>
 
 

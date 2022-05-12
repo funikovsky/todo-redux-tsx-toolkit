@@ -1,24 +1,43 @@
 import { FC } from "react"
+import { useAppSelector } from "../hook"
 
 interface IPost {
     post: {
-        id:number,
+        id: number,
         title: string,
         body: string,
         userId: number,
-        isPrivat: boolean
     }
 }
 
 
-export const PostInfo: FC<IPost> = ({post}) => {
+export const PostInfo: FC<IPost> = ({ post }) => {
 
-    return (
-        <div style={{backgroundColor:'red'}}>
-            user ID: {post.id},<br/> body: {post.body} 
+    const openPostId = useAppSelector(state => state.post?.openPostId)
 
-        </div>
+    if (openPostId === post.id) {
 
-    )
-    
+        return (
+
+            <div style={{ backgroundColor: 'red' }}>
+                user ID: {post.id},<br /> body: {post.body}
+            </div>
+
+        )
+    } else return (<></>)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
