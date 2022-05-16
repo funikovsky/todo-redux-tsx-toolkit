@@ -1,9 +1,9 @@
-import { FC } from "react";
+import { FC, ReactNode } from "react";
 import { useAppSelector } from "../hook";
 
 
 
-export const ErrorPosts:FC = () => {
+export const ErrorPosts:FC<{children: ReactNode}> = ({children}) => {
 
     const error = useAppSelector(state => state.post.error)
 
@@ -13,6 +13,6 @@ export const ErrorPosts:FC = () => {
                 <p>{error}</p>
             </>
         )
-    } else return (<></>)
+    } else return (<> {children} </>)
 
 }

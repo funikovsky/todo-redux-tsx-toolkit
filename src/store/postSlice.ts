@@ -72,6 +72,11 @@ export const getPosts = createAsyncThunk<InitialState, void, { rejectValue: stri
 
             const request = await fetch('https://jsonplaceholder.typicode.com/posts?_limit=10');
 
+            if(!request.ok) {
+                const message = `Ошибка загрузки данных с сервера: ${request.status}`
+                throw new Error(message)
+            }
+           
             const data: Array<Post> = await request.json()
 
             const newState = {
@@ -81,10 +86,13 @@ export const getPosts = createAsyncThunk<InitialState, void, { rejectValue: stri
                 openPostId: null
             }
 
-            return newState
+            return newState as InitialState
 
         } catch (e: any) {
-            return rejectWithValue('Ошибка загрузки данных')
+            if(e.message === 'Failed to fetch') {
+                console.log('Ошибка Fetch: Проверьте правильность указанного адреса')
+            }
+            return rejectWithValue(e.message)
         }
     }
 )

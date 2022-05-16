@@ -4,3 +4,25 @@
   margin-top: 50px;
 
 }
+.toDo {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+  width: 100%;
+}
+.header {
+  background-color: blueviolet;
+  width: 300px;
+  height: 50px;
+ 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+.accordBody {
+  background-color:blue; 
+  width: 300px;
+  
+
+}

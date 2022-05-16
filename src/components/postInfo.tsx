@@ -19,7 +19,7 @@ export const PostInfo: FC<IPost> = ({ post }) => {
 
         return (
 
-            <div style={{ backgroundColor: 'red' }}>
+            <div style={{ maxWidth: '30rem', backgroundColor: 'red' }}>
                 user ID: {post.id},<br /> body: {post.body}
             </div>
 

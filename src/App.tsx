@@ -1,5 +1,6 @@
 
 import './App.css';
+import { Accordion } from './components/accordion/accordion';
 import { Posts } from './components/posts';
 import { TodoForm } from './components/todoForm';
 import { TodoList } from './components/todoList';
@@ -13,28 +14,33 @@ function App() {
 
   return (
     <div className="App">
-      <div style={{ width: 500, textAlign: 'center' }}>
-        Change STORE
-        <UserForm />
-        <UserFirstName />
-        <UserLastName />
-      </div>
-      <div style={{ width: 500, textAlign: 'center' }}>
-        TODO
-        <TodoForm />
-        <TodoList todos={todos} />
-      </div>
-      <div style={{ width: 500, textAlign: 'center' }}>
-        POSTS
 
-        <div >
-          <Posts />
+      <div  className='toDo'>
+        <div style={{ marginRight: "2rem", textAlign: 'center' }}>
+          Change STORE
+          <UserForm />
+          <UserFirstName />
+          <UserLastName />
         </div>
 
+        <div style={{ marginRight: "2rem", textAlign: 'center' }}>
+          TODO
+          <TodoForm />
+          <TodoList todos={todos} />
+        </div>
+
+        <div style={{ marginRight: "2rem", textAlign: 'center' }}>
+          POSTS
+          <div >
+            <Posts />
+          </div>
+        </div>
+
+        <div>
+          <Accordion title='Accordion'/>
+        </div>
 
       </div>
-
-
 
     </div>
   );

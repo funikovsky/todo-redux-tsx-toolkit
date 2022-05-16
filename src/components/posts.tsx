@@ -10,17 +10,25 @@ import { GetPostsForm } from "./getPostForm"
 export const Posts: FC = () => {
 
     const posts = useAppSelector(state => state.post.posts)
+
     return (
 
         <>
             <GetPostsForm />
             <LoadingPosts />
-            <ErrorPosts />
 
-            {posts.map(post => (
-                <Post key={post.id} post={post} />
+            <ErrorPosts>
 
-            ))}
+                {posts.map(post => (
+                    <Post key={post.id} post={post} />
+
+                ))}
+
+
+            </ErrorPosts>
+
+
+
         </>
     )
 
